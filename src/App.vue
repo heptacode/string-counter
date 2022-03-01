@@ -12,6 +12,10 @@ import { Options, Vue } from 'vue-class-component';
 export default class App extends Vue {
   text: string = '';
 
+  created() {
+    this.text = localStorage.getItem('text') || '';
+  }
+
   mounted() {
     window.addEventListener('beforeunload', (event: BeforeUnloadEvent) => {
       if (this.getTextLength === 0) return;
@@ -23,6 +27,7 @@ export default class App extends Vue {
 
   onTextChanged(event: any) {
     this.text = event.target.value;
+    localStorage.setItem('text', event.target.value);
   }
 
   get getTextLength(): number {
@@ -65,7 +70,7 @@ export default class App extends Vue {
     border-radius: 0;
     outline: none;
 
-    font-size: 26px;
+    font-size: 16px;
     color: #2c3e50;
   }
   &__label {
