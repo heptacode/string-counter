@@ -12,6 +12,15 @@ import { Options, Vue } from 'vue-class-component';
 export default class App extends Vue {
   text: string = '';
 
+  mounted() {
+    window.addEventListener('beforeunload', (event: BeforeUnloadEvent) => {
+      if (this.getTextLength === 0) return;
+
+      event.preventDefault();
+      event.returnValue = '';
+    });
+  }
+
   onTextChanged(event: any) {
     this.text = event.target.value;
   }
