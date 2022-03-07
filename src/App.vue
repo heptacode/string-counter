@@ -1,7 +1,7 @@
 <template>
   <div class="counter">
     <textarea id="textarea" class="counter__textarea" v-model="text" @input="onTextChanged" placeholder="여기에 텍스트를 입력해주세요"></textarea>
-    <label for="textarea" class="counter__label">{{ getTextLength }}</label>
+    <label for="textarea" class="counter__label">{{ text.length }}</label>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default class App extends Vue {
 
   mounted() {
     window.addEventListener('beforeunload', (event: BeforeUnloadEvent) => {
-      if (this.getTextLength === 0) return;
+      if (this.text.length === 0) return;
 
       event.preventDefault();
       event.returnValue = '';
@@ -28,17 +28,6 @@ export default class App extends Vue {
   onTextChanged(event: any) {
     this.text = event.target.value;
     localStorage.setItem('text', event.target.value);
-  }
-
-  get getTextLength(): number {
-    let length: number = 0;
-    for (let i = 0; i < this.text.length; i++) {
-      if (escape(this.text.charAt(i)).length === 6) {
-        length++;
-      }
-      length++;
-    }
-    return length;
   }
 }
 </script>
